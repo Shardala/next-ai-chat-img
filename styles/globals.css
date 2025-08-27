@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0b0c10;
+  --card: #252730;
+  --text: #e5e7eb;
+  --user-color: #6ef51c;
+  --assistant-color: #f51c88;
+}
+
+html, body, #__next { height: 100%; }
+
+body {
+  background: radial-gradient(1200px 700px at 10% -10%, #1b1f2a 0%, #0b0c10 40%) no-repeat,
+              radial-gradient(900px 600px at 100% 0%, #18202f 0%, transparent 50%) no-repeat,
+              var(--bg);
+  color: var(--text);
+}
+
+.card {
+  @apply rounded-2xl shadow-lg bg-[color:var(--card)] border border-white/5;
+}
+
+.top-card {
+  background-color: #16191c;
+}
+
+.brain-icon {
+  color: aquamarine;
+  width: 3rem;
+  height: 3rem;
+}
+
+.role-user {
+  font-size: 1rem;
+  color: var(--user-color);
+  font-weight: 600;
+}
+
+.role-assistant {
+  font-size: 1rem;
+  color: var(--assistant-color);
+  font-weight: 600;
+}
+
+.main-container {
+  padding-top: 5rem;
+}
+
+.border-active {
+  border-color: #6ef51c;
+}
+
+.border-deactive {
+  border-color: color-mix(in oklab, white 10%, transparent);;
+}
+
+.input {
+  @apply w-full rounded-xl bg-black/20 px-4 py-3 outline-none;
+}
+.button {
+  @apply rounded-xl px-4 py-2 bg-white/10 hover:bg-white/20 transition;
+}
+input[type=file] {
+  color: red;
+  font-style: oblique;
+}
+input[type=file]::file-selector-button {
+  display: none;
+}
