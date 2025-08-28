@@ -1,8 +1,9 @@
+import { aiChatDescription, aiChatTitle } from './consts';
 import '../styles/globals.css'
 
 export const metadata = {
-  title: "AI text and image input",
-  description: "AI ChatGPT style app with text and image input",
+  title: aiChatTitle,
+  description: aiChatDescription,
   icons: {
     icon: 'favicon.ico',
   },

@@ -3,6 +3,7 @@
 import OpenAI from "openai";
 import { NextRequest, NextResponse } from "next/server";
 import { getDateNow } from '@/app/helpers/common';
+import { noResponse, sayHello } from '@/app/consts';
 
 export const runtime = 'nodejs';
 
@@ -17,12 +18,12 @@ export async function POST(req: NextRequest) {
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
       messages: messages?.map((m: any) => ({ role: m.role, content: m.content })) ?? [
-        { role: "user", content: "Say hello!", date: dateNow }
+        { role: "user", content: sayHello, date: dateNow }
       ],
       temperature: 0.5
     });
 
-    const reply = completion.choices[0]?.message?.content ?? "No response";
+    const reply = completion.choices[0]?.message?.content ?? noResponse;
 
     return NextResponse.json({ reply });
   } catch (e: any) {

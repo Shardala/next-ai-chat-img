@@ -4,16 +4,16 @@ import React, { useState, useRef } from 'react';
 import { Brain, Clock } from 'lucide-react';
 import { getDateNow } from './helpers/common';
 import { Message, Role, UserRole } from './types/types';
-import { aiChatDefaultMsg, aiChatTitle, genericErrorMsg, noFileMsg } from './consts';
+import { aiChatDefaultMsg, aiChatTitle, askSomething, assistantName, describeImage, genericErrorMsg, noFileMsg, orInspectTxt, selectImage, sendTxt, thinking, userName, youSentImage } from './consts';
 
 export const assistantRole = {
   tag: 'assistant' as UserRole,
-  name: 'Chat Assistant'
+  name: assistantName
 };
 
 export const userRole = {
   tag: 'user' as UserRole,
-  name: 'User'
+  name: userName
 }
 
 export default function Page() {
@@ -34,7 +34,7 @@ export default function Page() {
     if (!input && !image) return;
     setLoading(true);
 
-    const newMessages: Array<Message> = [...messages, { role: userRole, content: input || 'You sent an image: (' + fileName + ')', date: dateNow }];
+    const newMessages: Array<Message> = [...messages, { role: userRole, content: input || youSentImage + ': (' + fileName + ')', date: dateNow }];
     setMessages(newMessages);
 
     setInput('');
@@ -44,7 +44,7 @@ export default function Page() {
         const res = await fetch('/api/image-analysis', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ imageBase64: image, prompt: input || 'Describe this image.' }),
+          body: JSON.stringify({ imageBase64: image, prompt: input || describeImage }),
         });
 
         const data = await res.json();
@@ -117,14 +117,14 @@ export default function Page() {
       <div className="space-y-4">
         <div className="card space-y-2 flex flex-col pb-6 p-5 top-card">
           <div>
-            <textarea value={input} onChange={e => onInput(e)} placeholder="Ask something..." className={'input h-24 min-h-30 border ' + (input ? 'border-active' : 'border-deactive' )} />
+            <textarea value={input} onChange={e => onInput(e)} placeholder={askSomething} className={'input h-24 min-h-30 border ' + (input ? 'border-active' : 'border-deactive' )} />
           </div>
           <div>
-            <span className='px-2'>Or inspect an image</span>
+            <span className='px-2'>{orInspectTxt}</span>
           </div>
           <div className={'input-area flex items-center justify-start gap-6 space-y-3 p-6 bg-black/20 rounded-2xl border ' + (fileName ? 'border-active' : 'border-deactive' )}>
             <button onClick={clickFile} className='bg-slate-700 hover:bg-sky-700 px-[40px] py-[15px] rounded-lg cursor-pointer m-0'>
-              Select Image
+              {selectImage}
             </button>
             <div className='flex'>
               <input id="fileupload" ref={fileRef} onChange={onFile} type="file" accept="image/*" className="input hidden" />
@@ -133,7 +133,7 @@ export default function Page() {
           </div>
           <div className='flex justify-end align-center mt-5'>
             <button onClick={send} className={'self-end px-[40px] py-[15px] rounded-lg' + (buttonDisabled ? ' bg-black/10 text-white/20' : ' cursor-pointer bg-slate-700 hover:bg-sky-700') } disabled={buttonDisabled}>
-              {loading ? 'Thinking...' : 'Send'}
+              {loading ? thinking : sendTxt}
             </button>
           </div>
         </div>

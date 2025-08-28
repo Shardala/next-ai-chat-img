@@ -3,6 +3,7 @@
 import OpenAI from "openai";
 import { NextRequest, NextResponse } from "next/server";
 import { getDateNow } from '@/app/helpers/common';
+import { missingImage, noResponse, whatsInThisImage } from '@/app/consts';
 
 export const runtime = 'nodejs';
 
@@ -14,13 +15,13 @@ export async function POST(req: NextRequest) {
   try {
     const { imageBase64, prompt } = await req.json();
 
-    if (!imageBase64) return NextResponse.json({ error: "Missing imageBase64" }, { status: 400 });
+    if (!imageBase64) return NextResponse.json({ error: missingImage }, { status: 400 });
 
     const messages: any = [
       {
         role: "user",
         content: [
-          { type: "text", text: prompt || "What is in this image?" },
+          { type: "text", text: prompt || whatsInThisImage },
           { type: "image_url", image_url: { url: imageBase64 } },
         ],
         date: dateNow
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
       messages
     });
 
-    const reply = completion.choices[0]?.message?.content ?? "No response";
+    const reply = completion.choices[0]?.message?.content ?? noResponse;
 
     return NextResponse.json({ reply });
   } catch (e: any) {
