@@ -1,6 +1,6 @@
 # Next AI text and image input
 
-![AI Chat and image logo](https://github.com/Shardala/next-ai-chat-img/assets/chatimgnext.png "AI Chat and image logo")
+![AI Chat and image logo](https://github.com/Shardala/next-ai-chat-img/blob/main/assets/chatimgnext.png "AI Chat and image logo")
 
 A simple CHATGPT -esque app for inputting text or images to AI to respond.
 
